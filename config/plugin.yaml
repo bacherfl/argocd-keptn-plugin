@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ExecutorPlugin
+metadata:
+  name: keptn
+  namespace: argo
+spec:
+  sidecar:
+    automountServiceAccountToken: true
+    container:
+      image: bacherfl/keptn-argo-executor
+      name: keptn-executor-plugin
+      ports:
+        - containerPort: 1370
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534 # nobody
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"

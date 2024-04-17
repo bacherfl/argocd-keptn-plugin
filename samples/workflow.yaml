@@ -1,0 +1,23 @@
+metadata:
+  name: test-123
+  namespace: argo
+  labels:
+    example: 'true'
+spec:
+  arguments:
+    parameters:
+      - name: message
+        value: hello argo
+  entrypoint: keptn-analysis
+  templates:
+    - name: keptn-analysis
+      inputs:
+        parameters:
+          - name: query
+            value: analysis/simple-go/my-analysis-definition/1m/workload=simple-go-service
+      plugin:
+        keptn: {}
+  ttlStrategy:
+    secondsAfterCompletion: 300
+  podGC:
+    strategy: OnPodCompletion

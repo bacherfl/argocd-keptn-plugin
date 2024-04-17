@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: keptn-executor-plugin
+  namespace: argo
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keptn-executor-plugin.service-account-token
+  namespace: argo
+  annotations:
+    kubernetes.io/service-account.name: keptn-executor-plugin
+type: kubernetes.io/service-account-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argo-keptn-executor-plugin-role
+  namespace: argo
+rules:
+  - apiGroups:
+      - metrics.keptn.sh
+    resources:
+      - keptnmetrics
+      - analyses
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argo-keptn-executor-plugin-binding
+subjects:
+  - kind: ServiceAccount
+    name: keptn-executor-plugin
+    namespace: argo
+roleRef:
+  kind: ClusterRole
+  name: argo-keptn-executor-plugin-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argo-keptn-default-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: argo
+roleRef:
+  kind: ClusterRole
+  name: argo-keptn-executor-plugin-role
+  apiGroup: rbac.authorization.k8s.io
