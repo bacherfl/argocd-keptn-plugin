@@ -13,7 +13,7 @@ COPY . .
 
 # Go get dependencies
 RUN go mod download
-
+RUN go mod tidy
 # # Build
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -o keptn-server main.go
 
