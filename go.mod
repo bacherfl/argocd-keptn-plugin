@@ -3,7 +3,7 @@ module github.com/bacherfl/argo-keptn-plugin
 go 1.22.0
 
 require (
-	github.com/argoproj/argo-workflows/v3 v3.5.5
+	github.com/argoproj/argo-workflows/v3 v3.5.11
 	github.com/google/uuid v1.4.0
 	github.com/gorilla/mux v1.8.1
 	k8s.io/apimachinery v0.24.3
